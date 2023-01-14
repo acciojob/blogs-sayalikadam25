@@ -5,6 +5,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -18,12 +19,12 @@ public class Blog{
     private String title;
     private String content;
     @CreationTimestamp
-    private LocalDateTime pubDate;
+    private Date pubDate;
 
     public Blog(String title, String content) {
         this.title = title;
         this.content = content;
-        this.pubDate=LocalDateTime.now();
+        this.pubDate=new Date();
     }
     public Blog(){
     }
@@ -60,11 +61,11 @@ public class Blog{
         this.content = content;
     }
 
-    public LocalDateTime getPubDate() {
+    public Date getPubDate() {
         return pubDate;
     }
 
-    public void setPubDate(LocalDateTime pubDate) {
+    public void setPubDate(Date pubDate) {
         this.pubDate = pubDate;
     }
 
