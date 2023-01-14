@@ -40,6 +40,8 @@ public class BlogService {
         blog.setUser(userRepository1.findById(userId).get());
         User user=userRepository1.findById(userId).get();
         List<Blog> blogsOfUser=user.getBlogList();
+        if(blogsOfUser==null)
+            blogsOfUser=new ArrayList<>();
         blogsOfUser.add(blog);
         user.setBlogList(blogsOfUser);
         blogRepository1.save(blog);
