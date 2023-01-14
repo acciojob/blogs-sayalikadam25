@@ -40,7 +40,8 @@ public class BlogService {
         User user=userRepository1.findById(userId).get();
         List<Blog> blogsOfUser=user.getListOfBlogs();
         blogsOfUser.add(blog);
-        user.setListOfBlogs(blogsOfUser);
+        user.setBlogList(blogsOfUser);
+        userRepository1.save(user);
     }
 
     public Blog findBlogById(int blogId){
@@ -51,9 +52,10 @@ public class BlogService {
     public void addImage(Integer blogId, String description, String dimensions){
         Blog blog=blogRepository1.findById(blogId).get();
         Image image=new Image(description,dimensions);
-        List<Image> imagesInBlog=blog.getListOfImages();
+        List<Image> imagesInBlog=blog.getImageList();
         imagesInBlog.add(image);
-        blog.setListOfImages(imagesInBlog);
+        blog.setImageList(imagesInBlog);
+        blogRepository1.save(blog);
     }
 
     public void deleteBlog(int blogId){
