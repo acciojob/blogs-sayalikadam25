@@ -66,6 +66,7 @@ public class BlogService {
     }
 
     public void deleteBlog(int blogId){
+
         blogRepository1.deleteById(blogId);
     }
 }
