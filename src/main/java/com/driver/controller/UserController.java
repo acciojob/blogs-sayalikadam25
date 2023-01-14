@@ -33,6 +33,8 @@ public class UserController {
     @GetMapping("/find/{username}")
     public ResponseEntity<User> findUserByUsername(@PathVariable String username) {
         User user=userService.findUserByUsername(username);
+        if(user==null)
+            return new ResponseEntity<>(null,HttpStatus.OK);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }
