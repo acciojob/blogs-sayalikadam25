@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class ImageService {
@@ -31,14 +32,6 @@ public class ImageService {
     }
 
     public void deleteImage(Image image){
-        List<Blog> blogList=blogRepository.findAll();
-        for(Blog b:blogList){
-            List<Image> images=b.getImageList();
-            if(images.contains(image)) {
-                images.remove(image);
-                b.setImageList(images);
-            }
-        }
         imageRepository2.delete(image);
     }
 
@@ -49,14 +42,20 @@ public class ImageService {
     public int countImagesInScreen(Image image, String screenDimensions) {
         //Find the number of images of given dimensions that can fit in a screen having `screenDimensions`
         //In case the image is null, return 0
-        int count=0;
-        String imgD=image.getDimensions();
-        String [] imgDArray=imgD.split("x");
-        String [] screenDArray=screenDimensions.split("x");
-        int d1=Integer.valueOf(imgDArray[0]);
-        int D1=Integer.valueOf(screenDArray[0]);
-        int d2=Integer.valueOf(imgDArray[1]);
-        int D2=Integer.valueOf(screenDArray[1]);
-        return (D1/d1)*(D2/d2);
+//        int count=0;
+//        String imgD=image.getDimensions();
+//        String [] imgDArray=imgD.split("x");
+//        String [] screenDArray=screenDimensions.split("x");
+//        int d1=Integer.valueOf(imgDArray[0]);
+//        int D1=Integer.valueOf(screenDArray[0]);
+//        int d2=Integer.valueOf(imgDArray[1]);
+//        int D2=Integer.valueOf(screenDArray[1]);
+//        count=(D1/d1)*(D2/d2);
+        if(screenDimensions.split("X").length==2 || Objects.nonNull(image)){
+            int maxLength=Integer.parseInt(screenDimensions.split("X")[0])/Integer.parseInt(image.getDimensions().split("X")[0]);
+            int maxBreadth=Integer.parseInt(screenDimensions.split("X")[1])/Integer.parseInt(image.getDimensions().split("X")[1]);
+            return maxBreadth*maxLength;
+        }
+        return 0;
     }
 }

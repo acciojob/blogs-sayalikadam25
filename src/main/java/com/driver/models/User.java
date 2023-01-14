@@ -49,7 +49,7 @@ public class User{
         this.userId = userId;
     }
 
-    public List<Blog> getListOfBlogs() {
+    public List<Blog> getBlogList() {
         return listOfBlogs;
     }
 
