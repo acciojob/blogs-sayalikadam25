@@ -13,6 +13,6 @@ import java.util.List;
 @Repository
 public interface UserRepository extends CrudRepository<User, Integer> {
     //@Query(value="select * from User a where a.username=:name")
-    User findByUsername(String username);
+    User findByusername(String username);
 }
 
