@@ -6,6 +6,8 @@ import com.driver.repositories.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ImageService {
     @Autowired
@@ -23,6 +25,14 @@ public class ImageService {
     }
 
     public void deleteImage(Image image){
+        List<Blog> blogList=blogRepository.findAll();
+        for(Blog b:blogList){
+            List<Image> images=b.getImageList();
+            if(images.contains(image)) {
+                images.remove(image);
+                b.setImageList(images);
+            }
+        }
         imageRepository2.delete(image);
     }
 
