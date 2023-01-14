@@ -1,26 +1,16 @@
 package com.driver.models;
 
-import lombok.Data;
-
 import javax.persistence.*;
 
 @Entity
-@Table(name="Images")
-public class Image{
+public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String description;
+
     private String dimensions;
-    private int imageId;
-
-    public Image(String description, String dimensions) {
-        this.description = description;
-        this.dimensions = dimensions;
-    }
-    public Image(){
-
-    }
 
     public int getId() {
         return id;
@@ -46,12 +36,7 @@ public class Image{
         this.dimensions = dimensions;
     }
 
-    public int getImageId() {
-        return imageId;
-    }
-
-    public void setImageId(int imageId) {
-        this.imageId = imageId;
+    public Image() {
     }
 
     public Blog getBlog() {
@@ -62,8 +47,11 @@ public class Image{
         this.blog = blog;
     }
 
+    public Image(String description, String dimensions) {
+        this.description = description;
+        this.dimensions = dimensions;
+    }
     @ManyToOne
-    @JoinColumn(name="blog")
+    @JoinColumn
     private Blog blog;
-
 }

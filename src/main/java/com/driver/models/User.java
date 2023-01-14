@@ -1,21 +1,33 @@
+
 package com.driver.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
+import net.bytebuddy.implementation.bind.MethodDelegationBinder;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name="User")
-
-public class User{
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    public List<Blog> getBlogList() {
+        return blogList;
+    }
+
+    public void setBlogList(List<Blog> blogList) {
+        this.blogList = blogList;
+    }
+
+    @Column(unique = true)
     private String username;
-    private String Password;
-    private Integer userId;
+
+    private String password;
+
+    private String firstname;
+
+    private String lastname;
 
     public int getId() {
         return id;
@@ -30,35 +42,42 @@ public class User{
     }
 
     public void setUsername(String username) {
-        username = username;
+        this.username = username;
     }
 
     public String getPassword() {
-        return Password;
+        return password;
     }
 
     public void setPassword(String password) {
-        Password = password;
+        this.password = password;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
-    public List<Blog> getBlogList() {
-        return listOfBlogs;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setBlogList(List<Blog> listOfBlogs) {
-        this.listOfBlogs = listOfBlogs;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
+    public User() {
+    }
+
+    public User( String username, String password, String firstname, String lastname) {
+        this.username = username;
+        this.password = password;
+        this.firstname = firstname;
+        this.lastname = lastname;
+    }
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("user")
-    private List<Blog> listOfBlogs;
-
+    private List<Blog> blogList;
 }

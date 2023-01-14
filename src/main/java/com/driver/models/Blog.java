@@ -1,33 +1,20 @@
 package com.driver.models;
 
-import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
-
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name="Blog")
-
-public class Blog{
+public class Blog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int blogId;
-    private String title;
-    private String content;
-    @CreationTimestamp
-    private Date pubDate;
 
-    public Blog(String title, String content) {
-        this.title = title;
-        this.content = content;
-        this.pubDate=new Date();
-    }
-    public Blog(){
-    }
+    private String title;
+
+    private String content;
+
+    private Date pubdate;
 
     public int getId() {
         return id;
@@ -35,14 +22,6 @@ public class Blog{
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getBlogId() {
-        return blogId;
-    }
-
-    public void setBlogId(int blogId) {
-        this.blogId = blogId;
     }
 
     public String getTitle() {
@@ -62,11 +41,29 @@ public class Blog{
     }
 
     public Date getPubDate() {
-        return pubDate;
+        return pubdate;
     }
 
-    public void setPubDate(Date pubDate) {
-        this.pubDate = pubDate;
+    public List<Image> getImageList() {
+        return imageList;
+    }
+
+    public void setImageList(List<Image> imageList) {
+        this.imageList = imageList;
+    }
+
+    public void setPubDate(Date pubdate
+    ) {
+        this.pubdate = pubdate;
+    }
+
+    public Blog() {
+    }
+
+    public Blog( String title, String content, Date pubdate) {
+        this.title = title;
+        this.content = content;
+        this.pubdate = pubdate;
     }
 
     public User getUser() {
@@ -77,19 +74,10 @@ public class Blog{
         this.user = user;
     }
 
-    public List<Image> getImageList() {
-        return listOfImages;
-    }
-
-    public void setImageList(List<Image> listOfImages) {
-        this.listOfImages = listOfImages;
-    }
-
     @ManyToOne
-    @JoinColumn(name="user")
+    @JoinColumn
     private User user;
 
     @OneToMany(mappedBy = "blog",cascade = CascadeType.ALL)
-    private List<Image> listOfImages;
-
+    private List<Image> imageList;
 }

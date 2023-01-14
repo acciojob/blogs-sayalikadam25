@@ -12,35 +12,35 @@ import java.util.List;
 @RestController
 @RequestMapping("/blogs")
 public class BlogController {
+
     @Autowired
-    private BlogService blogService;
-    @GetMapping("/get-AllBlogs")
+    BlogService blogService;
+    @GetMapping
     public ResponseEntity<Integer> getAllBlogs() {
-        int countOfBlogs = blogService.noOfAllBlogs();
+        int countOfBlogs = 0;
         return new ResponseEntity<>(countOfBlogs, HttpStatus.OK);
     }
 
-    @PostMapping("/createBlog")
-    public ResponseEntity<String> createBlog(@RequestParam Integer userId ,
-                                           @RequestParam String title,
-                                           @RequestParam String content) {
-        blogService.createAndReturnBlog(userId,title,content);
-        return new ResponseEntity<>("Blog created!",HttpStatus.CREATED);
+    @PostMapping
+    public ResponseEntity createBlog(@RequestParam Integer userId ,
+                                     @RequestParam String title,
+                                     @RequestParam String content) {
+
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/{blogId}/add-image")
     public ResponseEntity<String> addImage(@PathVariable int blogId, @RequestParam String description, @RequestParam String dimensions) {
-        blogService.addImage(blogId,description,dimensions);
+
         return new ResponseEntity<>("Added image successfully", HttpStatus.OK);
     }
 
     @DeleteMapping("/{blogId}")
     public ResponseEntity<Void> deleteBlog(@PathVariable int blogId) {
-        blogService.deleteBlog(blogId);
+
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
-
 
 
 

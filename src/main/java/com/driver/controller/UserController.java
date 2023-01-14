@@ -1,6 +1,7 @@
 package com.driver.controller;
 
 import com.driver.models.User;
+import com.driver.repositories.UserRepository;
 import com.driver.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,30 +12,31 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/users")
 public class UserController {
     @Autowired
-    private UserService userService;
+    UserService userService;
+    @Autowired
+    private UserRepository userRepository;
+
     @PostMapping("/create")
-    public ResponseEntity<String> createUser(@RequestBody User user) {
+    public ResponseEntity<Void> createUser(@RequestBody User user) {
         userService.createUser(user);
-        return new ResponseEntity<>("User created Successfully",HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @DeleteMapping("/delete/{userId}")
-    public ResponseEntity<String> deleteUser(@PathVariable int userId) {
+    public ResponseEntity<Void> deleteUser(@PathVariable int userId) {
         userService.deleteUser(userId);
-        return new ResponseEntity<>("User deleted Successfully",HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<String> updateUser(@RequestBody User user) {
+    public ResponseEntity<Void> updateUser(@RequestBody User user) {
         userService.updateUser(user);
-        return new ResponseEntity<>("User information updated successfully",HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/find/{username}")
     public ResponseEntity<User> findUserByUsername(@PathVariable String username) {
         User user=userService.findUserByUsername(username);
-        if(user==null)
-            return new ResponseEntity<>(null,HttpStatus.OK);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }
