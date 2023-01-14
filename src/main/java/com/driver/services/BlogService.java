@@ -16,37 +16,47 @@ import java.util.List;
 @Service
 public class BlogService {
     @Autowired
-    BlogRepository blogRepository1;
+    private BlogRepository blogRepository1;
 
     @Autowired
-    ImageService imageService1;
+    private ImageService imageService1;
 
     @Autowired
-    UserRepository userRepository1;
+    private UserRepository userRepository1;
 
     public List<Blog> showBlogs(){
-        //find all blogs
-
+        List<Blog> blogs=blogRepository1.findAll();
+        return blogs;
+    }
+    public int noOfAllBlogs(){
+        return showBlogs().size();
     }
 
     public void createAndReturnBlog(Integer userId, String title, String content) {
         //create a blog at the current time
-
         //updating the blog details
-
         //Updating the userInformation and changing its blogs
-
+        Blog blog=new Blog(title,content);
+        User user=userRepository1.findById(userId).get();
+        List<Blog> blogsOfUser=user.getListOfBlogs();
+        blogsOfUser.add(blog);
+        user.setListOfBlogs(blogsOfUser);
     }
 
     public Blog findBlogById(int blogId){
-        //find a blog
+
+        return blogRepository1.findById(blogId).get();
     }
 
     public void addImage(Integer blogId, String description, String dimensions){
-        //add an image to the blog after creating it
+        Blog blog=blogRepository1.findById(blogId).get();
+        Image image=new Image(description,dimensions);
+        List<Image> imagesInBlog=blog.getListOfImages();
+        imagesInBlog.add(image);
+        blog.setListOfImages(imagesInBlog);
     }
 
     public void deleteBlog(int blogId){
-        //delete blog and corresponding images
+        blogRepository1.deleteById(blogId);
     }
 }
